@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		">  
+	<!-- Action -->
+	<bean id="empAction" class="cn.itcast.invoice.auth.emp.web.EmpAction" scope="prototype">
+		<property name="empEbi" ref="empEbi"/>
+		<property name="depEbi" ref="depEbi"/>
+		<property name="roleEbi" ref="roleEbi"/>
+	</bean>
+	<!-- Ebi -->
+	<bean id="empEbi" class="cn.itcast.invoice.auth.emp.business.ebo.EmpEbo">
+		<property name="empDao" ref="empDao"/>
+		<property name="resDao" ref="resDao"/>
+	</bean>
+	<!-- Dao -->
+	<bean id="empDao" class="cn.itcast.invoice.auth.emp.dao.impl.EmpDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>

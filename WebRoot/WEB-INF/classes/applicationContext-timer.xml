@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		">  
+	<!-- 开启定时任务 -->	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="doTime"/>
+				<ref bean="doTime1"/>
+			</list>
+		</property>
+	</bean>
+		
+	<!-- 定义spring什么时间完成指定的作业 -->
+	<bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="job"/>
+		<property name="cronExpression" value="1 0 0 ? * *"/>
+	</bean>
+		
+	<bean id="doTime1" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="job1"/>
+		<property name="cronExpression" value="0 0/30 9-16 ? * *"/>
+	</bean>
+		
+	<!-- 定时任务应该是某个Spring中的Bean对应的具体方法 -->	
+	<!-- 描述任务要描述哪个Bean中的具体的方法 -->
+	<bean id="job" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="task"/>
+		<property name="targetMethod" value="goodsUseNumUpdate"/>
+	</bean>
+	
+	<bean id="job1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="task"/>
+		<property name="targetMethod" value="storeWarn"/>
+	</bean>
+		
+	<!-- 设置任务类为Spring控制的Bean -->
+	<bean id="task" class="cn.itcast.invoice.util.quartz.QuartzTasks">
+		<property name="goodsDao" ref="goodsDao"/>
+		<property name="mailSender" ref="mailSender"/>
+	</bean>
+
+</beans>
