@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.custom.i18n.resources" value="msg" />
+    
+    <!-- 如果开启json类型数据的struts返回格式，需要使基础package继承json-default -->
+    <package name="default" namespace="/" extends="json-default">
+    	<!-- 声明自定义拦截器 -->
+    	<interceptors>
+    		<interceptor name="loginInterceptor" class="cn.itcast.invoice.util.interceptor.LoginInterceptor"/>
+    		<interceptor name="exceptionInterceptor" class="cn.itcast.invoice.util.interceptor.ExceptionInterceptor"/>
+    		<interceptor name="authInterceptor" class="cn.itcast.invoice.util.interceptor.AuthInterceptor"/>
+    		<!-- 自定义拦截器栈 -->
+    		<interceptor-stack name="systemStack">
+    			<interceptor-ref name="exceptionInterceptor"/>
+    			<interceptor-ref name="loginInterceptor"/>
+    			<interceptor-ref name="authInterceptor"/>
+    			<interceptor-ref name="defaultStack"/>
+    		</interceptor-stack>
+    	</interceptors>
+    
+    	<default-interceptor-ref name="systemStack"/>
+    
+    	<!-- 声明全局result -->
+    	<global-results>
+    		<result name="loginSuccess">/WEB-INF/jsps/main.jsp</result>
+    		<result name="loginFail">index.jsp</result>
+    		<result name="list">/WEB-INF/jsps/${actionName}/list.jsp</result>
+    		<result name="toList" type="redirectAction">${actionName}_list</result>
+    		<result name="input">/WEB-INF/jsps/${actionName}/input.jsp</result>
+    		<result name="error">/WEB-INF/jsps/error.jsp</result>
+    	</global-results>
+    
+    	<action name="pages_*">
+    		<result>/WEB-INF/jsps/{1}.jsp</result>
+    	</action>
+    	
+    	<action name="page_*_*">
+    		<result>/WEB-INF/jsps/{1}/{2}.jsp</result>
+    	</action>
+    	
+    	<!-- 部门 -->
+    	<action name="dep_*" class="depAction" method="{1}">
+    		<!-- 
+			<result name="list">/WEB-INF/jsps/dep/list.jsp</result>
+    		<result name="toList" type="redirectAction">dep_list</result>
+    		<result name="input">/WEB-INF/jsps/dep/input.jsp</result>    	
+    	 	-->
+    	</action>
+    	
+    	<!-- 员工 -->
+    	<action name="emp_*" class="empAction" method="{1}">
+    	</action>
+    	
+    	<!-- 角色 -->
+    	<action name="role_*" class="roleAction" method="{1}">
+    	</action>
+    	
+    	<!-- 资源 -->
+    	<action name="res_*" class="resAction" method="{1}">
+    	</action>
+    	
+    	<!-- 菜单 -->
+    	<action name="menu_*" class="menuAction" method="{1}">
+    	</action>
+    	
+    	<!-- 供应商 -->
+    	<action name="supplier_*" class="supplierAction" method="{1}">
+    	</action>
+    	
+    	<!-- 商品类别 -->
+    	<action name="goodsType_*" class="goodsTypeAction" method="{1}">
+    		<!-- 如何确认该返回是json，而不是一个页面 ？-->
+    		<result name="ajaxGetGtmBySupplier" type="json">
+    			<!-- 问题：你的数据在哪里？ -->
+    			<!-- 返回的数据来源于Action中 -->
+    			<!-- root:数据来源的位置 -->
+    			<param name="root">action</param>
+    			<!-- 如果设置root=action,那么,json-plugin将把action类中所有get开头的方法对应的数据返回 -->
+    			<!-- 由于返回的数据中包含有部分不需要的数据，因此需要对返回数据进行过滤 -->
+    			
+    			<param name="includeProperties">
+    				<!-- 定义需要转换的数据 -->
+    				<!-- json-plugin插件中规定此处需要的格式为正则表达式 -->
+    				<!-- gtmList.obj.uuid -->
+    				<!-- 格式：集合对象名[索引格式] -->
+    				gtmList\[\d+\]\.uuid,
+    				<!-- gtmList.obj.name -->
+    				gtmList\[\d+\]\.name
+    			</param>
+    			
+    			<!-- 排除格式 -->
+    			<!-- <param name="excludeProperties">
+    				gtmList.obj.sm
+    				gtmList\[\d+\]\.sm,
+    				gtmList\[\d+\]\.uuid
+    			</param> -->
+    		</result>
+    	</action>
+    	
+    	<!-- 商品 -->
+    	<action name="goods_*" class="goodsAction" method="{1}">
+    	</action>
+    	
+    	<!-- 订单-->
+    	<action name="order_*" class="orderAction" method="{1}">
+    		<!-- 暂定，当前仅仅为了跳转页面 -->
+    		<result name="list">/WEB-INF/jsps/order/buy/buyList.jsp</result>
+    		<result name="toList" type="redirectAction">order_list</result>
+    		<result name="buyInput">/WEB-INF/jsps/order/buy/buyInput.jsp</result>
+    		<result name="buyDetailList">/WEB-INF/jsps/order/buy/buyDetailList.jsp</result>
+    		<!-- 审核 -->
+    		<result name="buyCheck">/WEB-INF/jsps/order/buy/buyCheck.jsp</result>
+    		<result name="toBuyCheck" type="redirectAction">order_buyCheck</result>
+    		<result name="toBuyCheckDetail">/WEB-INF/jsps/order/buy/buyCheckDetail.jsp</result>
+    		<!-- 入库 -->
+    		<result name="inGoodsList">/WEB-INF/jsps/store/in/list.jsp</result>
+    		<result name="inGoodsDetail">/WEB-INF/jsps/store/in/inDetail.jsp</result>
+    		
+    		
+    		<!-- ajax -->
+    		<result name="ajaxGetGtmAndGm" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				gtmList\[\d+\]\.uuid,
+    				gtmList\[\d+\]\.name,
+    				gmList\[\d+\]\.uuid,
+    				gmList\[\d+\]\.name,
+					gm\.inPriceView,
+					gm\.outPriceView
+    			</param>
+    		</result>
+    		<result name="ajaxGetGm" type="json">
+    			<!-- 获取数据的来源可以设置为action中的任意get方法返回的数据 -->
+    			<!-- getGmList   root=gmList -->
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				gmList\[\d+\]\.uuid,
+    				gmList\[\d+\]\.name,
+					gm\.inPriceView,
+					gm\.outPriceView
+    			</param>
+    		</result>
+    		<result name="ajaxGetOne" type="json">
+    			<!-- 获取数据的来源可以设置为action中的任意get方法返回的数据 -->
+    			<!-- getGm	root=gm -->
+    			<param name="root">gm</param>
+    			<param name="includeProperties">
+					inPriceView,
+					outPriceView
+    			</param>
+    		</result>
+    		<result name="ajaxGetSurplusByOdmUuid" type="json">
+    			<param name="root">odm</param>
+    			<param name="includeProperties">
+    				surplus,
+    				num
+    			</param>
+    		</result>
+    	</action>
+    	
+    	<!-- 运输任务 -->
+    	<action name="task_*" class="orderAction" method="{1}">
+    		<result name="assignTaskList">/WEB-INF/jsps/task/assignTaskList.jsp</result>
+    		<result name="toAssignTaskList" type="redirectAction">task_assignTaskList</result>
+    		<result name="assignTaskDetail">/WEB-INF/jsps/task/assignTaskDetail.jsp</result>
+    		<result name="queryTask">/WEB-INF/jsps/task/queryTask.jsp</result>
+    		<result name="toQueryTask" type="redirectAction">task_queryTask</result>
+    		<result name="toTaskDetail">/WEB-INF/jsps/task/taskDetail.jsp</result>
+    	</action>
+    	
+    	<!-- 仓库 -->
+    	<action name="store_*" class="storeAction" method="{1}">
+    		<result name="ajaxInGoods" type="json">
+    			<param name="root">action</param>
+    			<param name="includeProperties">
+    				odm\.surplus,
+    				odm\.num,
+    				has,
+    				msg
+    			</param>
+    		</result>
+    	</action>
+    	
+    	<!-- 报表 -->
+    	<action name="bill_*" class="billAction" method="{1}">
+    		<result name="buyBill">/WEB-INF/jsps/bill/buyBill.jsp</result>
+    		<result name="ajaxBillDetailByGoods" type="json">
+				<param name="root">action</param>
+				<param name="includeProperties">
+					odmList\[\d+\]\.num,
+					odmList\[\d+\]\.priceView,
+					odmList\[\d+\]\.om\.createTimeView,
+					odmList\[\d+\]\.om\.orderNum
+				</param>
+			</result>
+			<result name="downloadExcelBill" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="inputName">downloadExcel</param>
+				<param name="contentDisposition">attachment;filename=${xlsName}</param>
+			</result>
+    	</action>
+    </package>
+</struts>
