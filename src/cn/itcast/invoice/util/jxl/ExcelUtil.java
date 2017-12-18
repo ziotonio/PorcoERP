@@ -16,6 +16,7 @@ import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 
 //操作Excel文件工具类
 public class ExcelUtil {
@@ -114,16 +115,51 @@ public class ExcelUtil {
 		alignMap.put(2, Alignment.RIGHT);
 	}
 	
+	private static WritableCellFormat setBorderTop(char value, WritableCellFormat wcf) throws WriteException {
+		if(value == '1'){
+			wcf.setBorder(Border.TOP, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
+		}else if(value == '2'){
+			wcf.setBorder(Border.TOP, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
+		}
+		return wcf;
+	}
+	
+	private static WritableCellFormat setBorderBottom(char value, WritableCellFormat wcf) throws WriteException {
+		if(value == '1'){
+			wcf.setBorder(Border.BOTTOM, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
+		}else if(value == '2'){
+			wcf.setBorder(Border.BOTTOM, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
+		}
+		return wcf;
+	}
+	
+	private static WritableCellFormat setBorderLeft(char value, WritableCellFormat wcf) throws WriteException {
+		if(value == '1'){
+			wcf.setBorder(Border.LEFT, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
+		}else if(value == '2'){
+			wcf.setBorder(Border.LEFT, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
+		}
+		return wcf;
+	}
+	
+	private static WritableCellFormat setBorderRight(char value, WritableCellFormat wcf) throws WriteException {
+		if(value == '1'){
+			wcf.setBorder(Border.RIGHT, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
+		}else if(value == '2'){
+			wcf.setBorder(Border.RIGHT, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
+		}
+		return wcf;
+	}
 	/**
-	 * 设置单元格样式
+	 * Imposta lo stile della cella
 	 * @param l
-	 * @param fontName 字体:字符串,如"黑体"
-	 * @param fontSize 字号:数字，如24
-	 * @param colour 字体颜色:Colour常量
-	 * @param bgColour 单元格背景色:Colour常量
-	 * @param align 对齐模式:0-左；1-中；2-右
-	 * @param borderStyle 边框线样式:字符串，如0000代表上下左右都不要边框，
-	 * 			如1100代表上下要边框，如0011代表左右要边框，如果0220代表左边和下边要粗边框
+	 * @param fontName Caratteri: stringhe, ad esempio "grassetto"
+	 * @param fontSize Dimensione carattere: numero, ad esempio 24
+	 * @param colour Colore carattere: costante colore
+	 * @param bgColour Colore di sfondo della cella: costante colore
+	 * @param align modalità di allineamento: 0- sinistra, 1- centro, 2 destra
+	 * @param borderStyle border line stringa, ad esempio con 0000 non si sono bordi su e giù，
+	 * 			1100 è un bordo dall'alto verso il basso，如0011代表左右要边框，如果0220代表左边和下边要粗边框
 	 */
 	public static void sLabelStyle(
 			Label l,String fontName,int fontSize,
@@ -134,48 +170,32 @@ public class ExcelUtil {
 			if(colour == null) colour = Colour.BLACK;
 			if(bgColour == null) bgColour = Colour.WHITE;
 			WritableFont wf = new WritableFont(
-					//设置字体
+					//Imposta il carattere
 					WritableFont.createFont(fontName), 
-					//设置字号
+					//Imposta dimensione del carattere
 					fontSize,
-					//设置加粗
+					//Imposta il grassetto
 					WritableFont.NO_BOLD,
-					//设置倾斜
+					//Imposta l'italico
 					false, 
-					//设置下划线
+					//Imposta sottolineato
 					UnderlineStyle.NO_UNDERLINE,
-					//设置字体颜色
+					//Imposta colore del carattere
 					colour);
 			
 			WritableCellFormat wcf = new WritableCellFormat(wf); 
-			//设置背景色
+			//Imposta il colore dello sfondo
 			wcf.setBackground(bgColour); 
-			//设置对其方式
+			//Imposta allineamento
 			wcf.setAlignment(Alignment.CENTRE);
 			
-			//设置边框
+			//Imposta il bordo
 			if(borderStyle != null && borderStyle.length() == 4){
 				char[] bs = borderStyle.toCharArray();
-				if(bs[0] == '1'){
-					wcf.setBorder(Border.TOP, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
-				}else if(bs[0] == '2'){
-					wcf.setBorder(Border.TOP, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
-				}
-				if(bs[1] == '1'){
-					wcf.setBorder(Border.BOTTOM, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
-				}else if(bs[1] == '2'){
-					wcf.setBorder(Border.BOTTOM, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
-				}
-				if(bs[2] == '1'){
-					wcf.setBorder(Border.LEFT, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
-				}else if(bs[2] == '2'){
-					wcf.setBorder(Border.LEFT, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
-				}
-				if(bs[3] == '1'){
-					wcf.setBorder(Border.RIGHT, BorderLineStyle.THIN,jxl.format.Colour.BLACK);
-				}else if(bs[3] == '2'){
-					wcf.setBorder(Border.RIGHT, BorderLineStyle.MEDIUM,jxl.format.Colour.BLACK);
-				}
+				setBorderTop(bs[0], wcf);
+				setBorderBottom(bs[1], wcf);
+				setBorderLeft(bs[2], wcf);
+				setBorderRight(bs[3], wcf);
 			}
 			
 			l.setCellFormat(wcf);
