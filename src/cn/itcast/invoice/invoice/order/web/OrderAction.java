@@ -61,7 +61,7 @@ public class OrderAction extends BaseAction{
 		this.orderEbi = orderEbi;
 	}
 
-	//跳转到列表页面
+	//è·³è½¬åˆ°åˆ—è¡¨é¡µé�¢
 	public String list(){
 		setDataTotal(orderEbi.getCount(oqm));
 		List<OrderModel> orderList = orderEbi.getAll(oqm,pageNum,pageCount);
@@ -69,7 +69,7 @@ public class OrderAction extends BaseAction{
 		return LIST;
 	}
 
-	//保存/修改
+	//ä¿�å­˜/ä¿®æ”¹
 	public String save(){
 		if(om.getUuid()== null){
 			orderEbi.save(om);
@@ -79,26 +79,26 @@ public class OrderAction extends BaseAction{
 		return TO_LIST;
 	}
 
-	//跳转到添加/修改页面
+	//è·³è½¬åˆ°æ·»åŠ /ä¿®æ”¹é¡µé�¢
 	public String input(){
 		if(om.getUuid()!=null){
 			om = orderEbi.get(om.getUuid());
 		}
 		return INPUT;
 	}
-	//跳转到采购订单页
+	//è·³è½¬åˆ°é‡‡è´­è®¢å�•é¡µ
 	
 	public String buyInput(){
 		List<SupplierModel> supplierList = supplierEbi.getAll();
-		//变成过滤该数据
-		//有类别但是类别中没有商品的类别过滤掉
-		//没有类别的供应商过滤掉
-		//循环所有的供应商，判定该供应商是否保留，如果不保留删除
+		//å�˜æˆ�è¿‡æ»¤è¯¥æ•°æ�®
+		//æœ‰ç±»åˆ«ä½†æ˜¯ç±»åˆ«ä¸­æ²¡æœ‰å•†å“�çš„ç±»åˆ«è¿‡æ»¤æŽ‰
+		//æ²¡æœ‰ç±»åˆ«çš„ä¾›åº”å•†è¿‡æ»¤æŽ‰
+		//å¾ªçŽ¯æ‰€æœ‰çš„ä¾›åº”å•†ï¼Œåˆ¤å®šè¯¥ä¾›åº”å•†æ˜¯å�¦ä¿�ç•™ï¼Œå¦‚æžœä¸�ä¿�ç•™åˆ é™¤
 		/*
 		for(int i = supplierList.size()-1;i>=0;i--){
 			SupplierModel sm = supplierList.get(i);
 			List<GoodsTypeModel> gtms = new ArrayList(sm.getGtms());
-			//循环商品类别中的数据
+			//å¾ªçŽ¯å•†å“�ç±»åˆ«ä¸­çš„æ•°æ�®
 			for(int j = gtms.size()-1;j>=0;j--){
 				GoodsTypeModel gtm = gtms.get(j);
 				if(gtm.getGms().size() == 0){
@@ -110,21 +110,28 @@ public class OrderAction extends BaseAction{
 			}
 		}
 		*/
-		A:
+		int flag=0;
 		for(int i = supplierList.size()-1;i>=0;i--){
+			flag=0;
 			SupplierModel sm = supplierList.get(i);
 			//List<GoodsTypeModel> gtms = new ArrayList(sm.getGtms());
-			//性能优于上面的方案
+			//æ€§èƒ½ä¼˜äºŽä¸Šé�¢çš„æ–¹æ¡ˆ
 			List<GoodsTypeModel> gtms = goodsTypeEbi.getAllBySupplier(sm.getUuid());
-			//循环商品类别中的数据
+			//å¾ªçŽ¯å•†å“�ç±»åˆ«ä¸­çš„æ•°æ�®
 			for(int j = gtms.size()-1;j>=0;j--){
 				GoodsTypeModel gtm = gtms.get(j);
 				if(gtm.getGms().size() > 0){
-					continue A;
+					flag=1;
+				}
+				if(flag==1) {
+					continue;
 				}
 			}
-			supplierList.remove(i);
+			if(flag==1) {
+				continue;
+		       }else supplierList.remove(i);
 		}
+
 		List<GoodsTypeModel> gtmList = goodsTypeEbi.getAllUnionBySupplier(supplierList.get(0).getUuid());
 		List<GoodsModel> gmList = goodsEbi.getAllByGtmUuid(gtmList.get(0).getUuid());
 		put("supplierList",supplierList);
@@ -158,28 +165,28 @@ public class OrderAction extends BaseAction{
 	
 	/*
 	public String buyInput(){
-		//加载供应商数据
-		//问题：个别没有商品类别的供应商不应该被加载
-		//解决方案一：
-		//读取所有数据后，通过迭代集合将所有没有类别的供应商删除掉
-		//解决方案二：
-		//查询数据时，直接将没有商品类别的供应商过滤掉
-		//查供应商  供应商关联类别
-		//问题分析：某个供应商具有多个商品类别，但是类别中没有商品？
-		//查供应商  供应商关联类别，类别关联商品 distinct
+		//åŠ è½½ä¾›åº”å•†æ•°æ�®
+		//é—®é¢˜ï¼šä¸ªåˆ«æ²¡æœ‰å•†å“�ç±»åˆ«çš„ä¾›åº”å•†ä¸�åº”è¯¥è¢«åŠ è½½
+		//è§£å†³æ–¹æ¡ˆä¸€ï¼š
+		//è¯»å�–æ‰€æœ‰æ•°æ�®å�Žï¼Œé€šè¿‡è¿­ä»£é›†å�ˆå°†æ‰€æœ‰æ²¡æœ‰ç±»åˆ«çš„ä¾›åº”å•†åˆ é™¤æŽ‰
+		//è§£å†³æ–¹æ¡ˆäºŒï¼š
+		//æŸ¥è¯¢æ•°æ�®æ—¶ï¼Œç›´æŽ¥å°†æ²¡æœ‰å•†å“�ç±»åˆ«çš„ä¾›åº”å•†è¿‡æ»¤æŽ‰
+		//æŸ¥ä¾›åº”å•†  ä¾›åº”å•†å…³è�”ç±»åˆ«
+		//é—®é¢˜åˆ†æž�ï¼šæŸ�ä¸ªä¾›åº”å•†å…·æœ‰å¤šä¸ªå•†å“�ç±»åˆ«ï¼Œä½†æ˜¯ç±»åˆ«ä¸­æ²¡æœ‰å•†å“�ï¼Ÿ
+		//æŸ¥ä¾›åº”å•†  ä¾›åº”å•†å…³è�”ç±»åˆ«ï¼Œç±»åˆ«å…³è�”å•†å“� distinct
 		List<SupplierModel> supplierList = supplierEbi.getAllUnionTwo();
-		//加载第一个供应商的类别数据
+		//åŠ è½½ç¬¬ä¸€ä¸ªä¾›åº”å•†çš„ç±»åˆ«æ•°æ�®
 		/*
-		1号		A	B	C
+		1å�·		A	B	C
 				a1	b1	
 				a2	b2
 				a3
 		*/
 	/*
 		List<GoodsTypeModel> gtmList = goodsTypeEbi.getAllUnionBySupplier(supplierList.get(0).getUuid());
-		//加载第一个类别的商品数据
+		//åŠ è½½ç¬¬ä¸€ä¸ªç±»åˆ«çš„å•†å“�æ•°æ�®
 		List<GoodsModel> gmList = goodsEbi.getAllByGtmUuid(gtmList.get(0).getUuid());
-		//加载第一个商品的价格数据(省略)
+		//åŠ è½½ç¬¬ä¸€ä¸ªå•†å“�çš„ä»·æ ¼æ•°æ�®(çœ�ç•¥)
 		//GoodsModel gm = gmList.get(0);
 		//put("gm",gm);
 		/*
@@ -190,7 +197,7 @@ public class OrderAction extends BaseAction{
 		return "buyInput";
 	}*/
 
-	//删除
+	//åˆ é™¤
 	public String delete(){
 		orderEbi.delete(om);
 		return TO_LIST;
@@ -217,57 +224,62 @@ public class OrderAction extends BaseAction{
 	}
 
 	public String ajaxGetGtmAndGm(){
-		//根据供应商的uuid获取类别数据与商品数据
-		//类别中必须有商品
+		//æ ¹æ�®ä¾›åº”å•†çš„uuidèŽ·å�–ç±»åˆ«æ•°æ�®ä¸Žå•†å“�æ•°æ�®
+		//ç±»åˆ«ä¸­å¿…é¡»æœ‰å•†å“�
 		gtmList = goodsTypeEbi.getAllUnionBySupplier(supplierUuid);
-		//根据第一个商品类别获取对应的所有商品
+		//æ ¹æ�®ç¬¬ä¸€ä¸ªå•†å“�ç±»åˆ«èŽ·å�–å¯¹åº”çš„æ‰€æœ‰å•†å“�
 		gmList = goodsEbi.getAllByGtmUuid(gtmList.get(0).getUuid());
-		//获取第一个商品信息
+		//èŽ·å�–ç¬¬ä¸€ä¸ªå•†å“�ä¿¡æ�¯
 		gm = gmList.get(0);
 		return "ajaxGetGtmAndGm";
 	}
 	
-	//需要过滤已经使用的数据
+	//éœ€è¦�è¿‡æ»¤å·²ç»�ä½¿ç”¨çš„æ•°æ�®
 	public String ajaxGetGtmAndGm2(){
-		//解析出已经使用的商品对应的uuid
+		//è§£æž�å‡ºå·²ç»�ä½¿ç”¨çš„å•†å“�å¯¹åº”çš„uuid
 		String[] uuidsArr = used.split(",");
-		//将使用过的商品 uuid转换为一个数组/集合
+		//å°†ä½¿ç”¨è¿‡çš„å•†å“� uuidè½¬æ�¢ä¸ºä¸€ä¸ªæ•°ç»„/é›†å�ˆ
 		Set<Long> uuids = new HashSet<Long>();
 		for(String uuidStr:uuidsArr){
 			uuids.add(new Long(uuidStr));
 		}
 		
-		//根据供应商的uuid获取类别数据与商品数据
-		//类别中必须有商品
+		//æ ¹æ�®ä¾›åº”å•†çš„uuidèŽ·å�–ç±»åˆ«æ•°æ�®ä¸Žå•†å“�æ•°æ�®
+		//ç±»åˆ«ä¸­å¿…é¡»æœ‰å•†å“�
 		gtmList = goodsTypeEbi.getAllUnionBySupplier(supplierUuid);
-		//1.如果类别中的所有商品都使用过，该类别删除
-		//1.x如果类别中某个商品没有使用过，该类别保留
-		goodsType:
+		//1.å¦‚æžœç±»åˆ«ä¸­çš„æ‰€æœ‰å•†å“�éƒ½ä½¿ç”¨è¿‡ï¼Œè¯¥ç±»åˆ«åˆ é™¤
+		//1.xå¦‚æžœç±»åˆ«ä¸­æŸ�ä¸ªå•†å“�æ²¡æœ‰ä½¿ç”¨è¿‡ï¼Œè¯¥ç±»åˆ«ä¿�ç•™
+		int flag=0;
 		for(int i = gtmList.size()-1;i>=0;i--){
+			flag = 0;
 			GoodsTypeModel gtm = gtmList.get(i);
 			//根据商品类别获取商品
 			gmList = goodsEbi.getAllByGtmUuid(gtm.getUuid());
 			for(GoodsModel temp:gmList){
 				if(!uuids.contains(temp.getUuid())){
-					continue goodsType;
+					flag = 1;
+					continue;
 				}
 			}
 			//该类别中所有商品全部使用过
-			gtmList.remove(i);
+			if(flag ==1){
+				continue;
+			} else gtmList.remove(i);
 		}
+
 		
-		//根据第一个商品类别获取对应的所有商品
+		//æ ¹æ�®ç¬¬ä¸€ä¸ªå•†å“�ç±»åˆ«èŽ·å�–å¯¹åº”çš„æ‰€æœ‰å•†å“�
 		gmList = goodsEbi.getAllByGtmUuid(gtmList.get(0).getUuid());
-		//删除掉已经使用过的商品
+		//åˆ é™¤æŽ‰å·²ç»�ä½¿ç”¨è¿‡çš„å•†å“�
 		for(int i = gmList.size()-1;i>=0;i--){
 			GoodsModel gm = gmList.get(i);
 			if(uuids.contains(gm.getUuid())){
-				//该商品已经使用过
+				//è¯¥å•†å“�å·²ç»�ä½¿ç”¨è¿‡
 				gmList.remove(i);
 			}
 		}
 		
-		//获取第一个商品信息
+		//èŽ·å�–ç¬¬ä¸€ä¸ªå•†å“�ä¿¡æ�¯
 		gm = gmList.get(0);
 		return "ajaxGetGtmAndGm";
 	}
@@ -287,9 +299,9 @@ public class OrderAction extends BaseAction{
 	public Integer[] nums;
 	public Double[] prices;
 	
-	//生成采购订单
+	//ç”Ÿæˆ�é‡‡è´­è®¢å�•
 	public String buyOrder(){
-		//收集页面的值
+		//æ”¶é›†é¡µé�¢çš„å€¼
 		//om.sm.uuid->om
 		/*
 		System.out.println(om.getSm().getUuid());
@@ -315,42 +327,42 @@ public class OrderAction extends BaseAction{
 		return "buyDetailList";
 	}
 	
-	//--审核相关----------------------
+	//--å®¡æ ¸ç›¸å…³----------------------
 	public String buyCheck(){
 		setDataTotal(orderEbi.getCountByTypes(oqm));
 		List<OrderModel> orderList = orderEbi.getAllNoCheckOrder(oqm,pageNum,pageCount);
 		put("orderList",orderList);
 		return "buyCheck";
 	}
-	//转到审核详情页
+	//è½¬åˆ°å®¡æ ¸è¯¦æƒ…é¡µ
 	public String toBuyCheckDetail(){
-		//根据订单的uuid获取订单数据
+		//æ ¹æ�®è®¢å�•çš„uuidèŽ·å�–è®¢å�•æ•°æ�®
 		om = orderEbi.get(om.getUuid());
 		return "toBuyCheckDetail";
 	}
-	//采购审核通过
+	//é‡‡è´­å®¡æ ¸é€šè¿‡
 	public String buyCheckPass(){
 		orderEbi.buyCheckPass(om.getUuid(),getLogin());
 		return "toBuyCheck";
 	}
-	//采购审核驳回
+	//é‡‡è´­å®¡æ ¸é©³å›ž
 	public String buyCheckNoPass(){
 		orderEbi.buyCheckNoPass(om.getUuid(),getLogin());
 		return "toBuyCheck";
 	}
 	
 	
-	//--任务分配----------------------
+	//--ä»»åŠ¡åˆ†é…�----------------------
 	public String assignTaskList(){
-		//获取待分配的任务数据集合
+		//èŽ·å�–å¾…åˆ†é…�çš„ä»»åŠ¡æ•°æ�®é›†å�ˆ
 		List<OrderModel> orderList = orderEbi.getAllTasks(oqm,pageNum,pageCount);
 		put("orderList",orderList);
-		//跳转页面
+		//è·³è½¬é¡µé�¢
 		return "assignTaskList";
 	}
 	
 	public String assignTaskDetail(){
-		//加载运输部门的所有员工
+		//åŠ è½½è¿�è¾“éƒ¨é—¨çš„æ‰€æœ‰å‘˜å·¥
 		Long depUuid = getLogin().getDm().getUuid();
 		List<EmpModel> empList = empEbi.getAllByDep(depUuid);
 		put("empList",empList);
@@ -358,15 +370,15 @@ public class OrderAction extends BaseAction{
 		return "assignTaskDetail";
 	}
 	
-	//指派具体任务人
+	//æŒ‡æ´¾å…·ä½“ä»»åŠ¡äºº
 	public String assignTask(){
-		//指派任务人  om.uuid   om.completer.uuid
+		//æŒ‡æ´¾ä»»åŠ¡äºº  om.uuid   om.completer.uuid
 		orderEbi.assignTask(om);
 		return "toAssignTaskList";
 	}
 	
 	public String queryTask(){
-		//根据登陆人信息获取对应的任务列表
+		//æ ¹æ�®ç™»é™†äººä¿¡æ�¯èŽ·å�–å¯¹åº”çš„ä»»åŠ¡åˆ—è¡¨
 		List<OrderModel> orderList = orderEbi.getAllByCompleter(oqm,pageNum,pageCount,getLogin());
 		put("orderList",orderList);
 		return "queryTask";
@@ -382,24 +394,24 @@ public class OrderAction extends BaseAction{
 		return "toQueryTask";
 	}
 	
-	//--任务分配结束----------------------
+	//--ä»»åŠ¡åˆ†é…�ç»“æ�Ÿ----------------------
 	
-	//仓库入库
+	//ä»“åº“å…¥åº“
 	public String inGoodsList(){
-		//展示所有没有入库完毕的订单数据
+		//å±•ç¤ºæ‰€æœ‰æ²¡æœ‰å…¥åº“å®Œæ¯•çš„è®¢å�•æ•°æ�®
 		List<OrderModel> orderList = orderEbi.getAllNotIn(oqm,pageNum,pageCount);
 		put("orderList",orderList);
 		return "inGoodsList";
 	}
 	public String inGoodsDetail(){
-		//加载所有仓库数据
+		//åŠ è½½æ‰€æœ‰ä»“åº“æ•°æ�®
 		List<StoreModel> storeList = storeEbi.getAll();
 		put("storeList",storeList);
 		om = orderEbi.get(om.getUuid());
 		return "inGoodsDetail";
 	}
 	
-	//--入库--------------------------------
+	//--å…¥åº“--------------------------------
 	public Long odmUuid;
 	private OrderDetailModel odm;
 	
@@ -408,7 +420,7 @@ public class OrderAction extends BaseAction{
 	}
 
 	public String ajaxGetSurplusByOdmUuid(){
-		//根据odmUuid获取对应的货物剩余数量
+		//æ ¹æ�®odmUuidèŽ·å�–å¯¹åº”çš„è´§ç‰©å‰©ä½™æ•°é‡�
 		odm = orderDetailEbi.get(odmUuid);
 		return "ajaxGetSurplusByOdmUuid";
 	}
