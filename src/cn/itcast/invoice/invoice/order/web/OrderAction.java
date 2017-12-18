@@ -122,14 +122,12 @@ public class OrderAction extends BaseAction{
 				GoodsTypeModel gtm = gtms.get(j);
 				if(gtm.getGms().size() > 0){
 					flag=1;
-				}
-				if(flag==1) {
 					continue;
 				}
 			}
 			if(flag==1) {
 				continue;
-		       }else supplierList.remove(i);
+		    }else supplierList.remove(i);
 		}
 
 		List<GoodsTypeModel> gtmList = goodsTypeEbi.getAllUnionBySupplier(supplierList.get(0).getUuid());
