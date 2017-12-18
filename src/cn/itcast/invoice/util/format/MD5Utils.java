@@ -1,31 +1,32 @@
 ﻿package cn.itcast.invoice.util.format;
-
-import java.math.BigInteger;
+//fixed error id 9
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class MD5Utils {
 	/**
 	 * 使用md5的算法进行加密
 	 */
-	public static String md5(String plainText) {
-		byte[] secretBytes = null;
-		try {
-			secretBytes = MessageDigest.getInstance("md5").digest(
-					plainText.getBytes());
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException("没有md5这个算法！");
-		}
-		String md5code = new BigInteger(1, secretBytes).toString(16);// 16进制数字
-		// 如果生成数字未满32位，需要前面补0
-		for (int i = 0; i < 32 - md5code.length(); i++) {
-			md5code = "0" + md5code;
-		}
-		return md5code;
+
+	public static String sha256(String base) {
+	    try{
+	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        byte[] hash = digest.digest(base.getBytes("UTF-8"));
+	        StringBuffer hexString = new StringBuffer();
+
+	        for (int i = 0; i < hash.length; i++) {
+	            String hex = Integer.toHexString(0xff & hash[i]);
+	            if(hex.length() == 1) hexString.append('0');
+	            hexString.append(hex);
+	        }
+
+	        return hexString.toString();
+	    } catch(Exception ex){
+	       throw new RuntimeException(ex);
+	    }
 	}
 
 	public static void main(String[] args) {
-		System.out.println(md5("123"));
+		System.out.println(sha256("123"));
 	}
 
 }
