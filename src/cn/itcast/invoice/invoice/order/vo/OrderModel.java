@@ -17,12 +17,12 @@ public class OrderModel {
 	public static final Integer ORDER_TYPE_OF_BUY_IN_STORE = 141;
 	public static final Integer ORDER_TYPE_OF_BUY_END = 199;
 	
-	public static final String ORDER_TYPE_OF_BUY_NO_CHECK_VIEW = "未审核";
-	public static final String ORDER_TYPE_OF_BUY_CHECK_NO_PASS_VIEW = "驳回";
-	public static final String ORDER_TYPE_OF_BUY_CHECK_PASS_VIEW = "任务指派中";
-	public static final String ORDER_TYPE_OF_BUY_BUYING_VIEW = "采购中";
-	public static final String ORDER_TYPE_OF_BUY_IN_STORE_VIEW = "入库中";
-	public static final String ORDER_TYPE_OF_BUY_END_VIEW = "已结单";
+	public static final String ORDER_TYPE_OF_BUY_NO_CHECK_VIEW = "æœªå®¡æ ¸";
+	public static final String ORDER_TYPE_OF_BUY_CHECK_NO_VIEW = "é©³å›ž";
+	public static final String ORDER_TYPE_OF_BUY_CHECK_OK_VIEW = "ä»»åŠ¡æŒ‡æ´¾ä¸­";
+	public static final String ORDER_TYPE_OF_BUY_BUYING_VIEW = "é‡‡è´­ä¸­";
+	public static final String ORDER_TYPE_OF_BUY_IN_STORE_VIEW = "å…¥åº“ä¸­";
+	public static final String ORDER_TYPE_OF_BUY_END_VIEW = "å·²ç»“å�•";
 	
 	public static final Map<Integer, String> orderTypeMap = new HashMap<Integer, String>();
 	public static final Map<Integer, String> buyTypeMap = new TreeMap<Integer, String>();
@@ -34,10 +34,10 @@ public class OrderModel {
 	public static final Integer ORDER_ORDERTYPE_OF_RETURN_BUY = 3;
 	public static final Integer ORDER_ORDERTYPE_OF_RETURN_SALE = 4;
 	
-	public static final String ORDER_ORDERTYPE_OF_BUY_VIEW = "采购";
-	public static final String ORDER_ORDERTYPE_OF_SALE_VIEW = "销售";
-	public static final String ORDER_ORDERTYPE_OF_RETURN_BUY_VIEW = "采购退货";
-	public static final String ORDER_ORDERTYPE_OF_RETURN_SALE_VIEW = "销售退货";
+	public static final String ORDER_ORDERTYPE_OF_BUY_VIEW = "é‡‡è´­";
+	public static final String ORDER_ORDERTYPE_OF_SALE_VIEW = "é”€å”®";
+	public static final String ORDER_ORDERTYPE_OF_RETURN_BUY_VIEW = "é‡‡è´­é€€è´§";
+	public static final String ORDER_ORDERTYPE_OF_RETURN_SALE_VIEW = "é”€å”®é€€è´§";
 	
 	static{
 		orderTypeMap.put(ORDER_ORDERTYPE_OF_BUY,ORDER_ORDERTYPE_OF_BUY_VIEW);
@@ -46,8 +46,8 @@ public class OrderModel {
 		orderTypeMap.put(ORDER_ORDERTYPE_OF_RETURN_SALE,ORDER_ORDERTYPE_OF_RETURN_SALE_VIEW);
 		
 		buyTypeMap.put(ORDER_TYPE_OF_BUY_NO_CHECK, ORDER_TYPE_OF_BUY_NO_CHECK_VIEW);
-		buyTypeMap.put(ORDER_TYPE_OF_BUY_CHECK_NO_PASS, ORDER_TYPE_OF_BUY_CHECK_NO_PASS_VIEW);
-		buyTypeMap.put(ORDER_TYPE_OF_BUY_CHECK_PASS, ORDER_TYPE_OF_BUY_CHECK_PASS_VIEW);
+		buyTypeMap.put(ORDER_TYPE_OF_BUY_CHECK_NO_PASS, ORDER_TYPE_OF_BUY_CHECK_NO_VIEW);
+		buyTypeMap.put(ORDER_TYPE_OF_BUY_CHECK_PASS, ORDER_TYPE_OF_BUY_CHECK_OK_VIEW);
 		buyTypeMap.put(ORDER_TYPE_OF_BUY_BUYING, ORDER_TYPE_OF_BUY_BUYING_VIEW);
 		buyTypeMap.put(ORDER_TYPE_OF_BUY_IN_STORE, ORDER_TYPE_OF_BUY_IN_STORE_VIEW);
 		buyTypeMap.put(ORDER_TYPE_OF_BUY_END, ORDER_TYPE_OF_BUY_END_VIEW);
@@ -55,22 +55,22 @@ public class OrderModel {
 		typeMap.putAll(buyTypeMap);
 	}
 	
-	//type状态类型
+	//typeçŠ¶æ€�ç±»åž‹
 	/*
-	申请未审批					未审核			111
-	申请已审批驳回				驳回				120
-	申请已审批通过/未指派任务人	任务指派中			121
-	已指派任务人/任务未完成		采购中			131
-	任务已经完成/订单未入库		入库中			141
-	订单入库完毕				已结单			199
+	ç”³è¯·æœªå®¡æ‰¹					æœªå®¡æ ¸			111
+	ç”³è¯·å·²å®¡æ‰¹é©³å›ž				é©³å›ž				120
+	ç”³è¯·å·²å®¡æ‰¹é€šè¿‡/æœªæŒ‡æ´¾ä»»åŠ¡äºº	ä»»åŠ¡æŒ‡æ´¾ä¸­			121
+	å·²æŒ‡æ´¾ä»»åŠ¡äºº/ä»»åŠ¡æœªå®Œæˆ�		é‡‡è´­ä¸­			131
+	ä»»åŠ¡å·²ç»�å®Œæˆ�/è®¢å�•æœªå…¥åº“		å…¥åº“ä¸­			141
+	è®¢å�•å…¥åº“å®Œæ¯•				å·²ç»“å�•			199
 	*/
 	/*
-	211	未审核									
-	220	驳回
-	221	任务指派中
-	231	出库中
-	241	送货中
-	299	已结单
+	211	æœªå®¡æ ¸									
+	220	é©³å›ž
+	221	ä»»åŠ¡æŒ‡æ´¾ä¸­
+	231	å‡ºåº“ä¸­
+	241	é€�è´§ä¸­
+	299	å·²ç»“å�•
 	*/
 	
 	private Long uuid;
@@ -87,7 +87,7 @@ public class OrderModel {
 	private Long checkTime;
 	private Long completeTime;
 	
-	//视图值
+	//è§†å›¾å€¼
 	private String totalPriceView;
 	private String createTimeView;
 	private String checkTimeView;
@@ -95,7 +95,7 @@ public class OrderModel {
 	private String orderTypeView;
 	private String typeView;
 	
-	//关系
+	//å…³ç³»
 	private EmpModel creater;
 	private EmpModel checker;
 	private EmpModel completer;
