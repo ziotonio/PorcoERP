@@ -38,7 +38,7 @@ public class SupplierDaoImpl extends BaseDaoImpl<SupplierModel> implements Suppl
 		}
 		
 	}
-	
+	 
 	public void control3(SupplierQueryModel sqm,DetachedCriteria dc) {
 		if(sqm.getTele()!=null && sqm.getTele().trim().length()>0){
 			dc.add(Restrictions.like("tele", "%"+sqm.getTele().trim()+"%"));
