@@ -11,13 +11,16 @@ bodyHolidayFontColor    : "#ff0000", //假日字体色
 watermarkColor 		    : "#888888", //背景水印色
 moreDayColor            : "#cccccc" 
 };
+
 this.showMoreDay = true; //是否显示上月和下月的日期
 this.Obj = objName;		
 this.date = null;
 this.mouseOffset = null;
 this.dateInput = null;
 this.timer = null;	
+
 };
+
 Calendar.prototype.toString = function()
 {   
 var str = this.getStyle();
@@ -191,13 +194,49 @@ var _year = _date.getFullYear();
 var _month = _date.getMonth();
 var _day = 1;	
 var _startDay = new Date(_year,_month,1).getDay();
-var _previYear = _month == 0 ? _year - 1 : _year;
-var _previMonth = _month == 0 ? 11 : _month - 1;
+
+var _previYear;
+
+	if(_month==0){
+	_previYear=_year-1
+	}else{
+		_previYear=_year;
+	}
+
+var _previMonth;
+
+if(_month==0){
+	_previMonth=11
+	}else{
+		_previMonth=_month-1;
+	}
+
+
 var _previDay = _monthDays[_previMonth];
-if (_previMonth == 1) _previDay =((_previYear%4==0)&&(_previYear%100!=0)||(_previYear%400==0))?29:28;	
+
+//if (_previMonth == 1)_previDay =((_previYear%4==0)&&(_previYear%100!=0)||(_previYear%400==0))?29:28;	
+//_previDay -= _startDay - 1;
+
+if(_previMonth == 1){
+	if((((_previYear%4==0)&&(_previYear%100!=0))||(_previYear%400==0))){
+		_previDay =29;
+	}
+}else{
+	_previDay =28;
+}
 _previDay -= _startDay - 1;
+
+
 var _nextDay = 1;
-_monthDays[1] = ((_year%4==0)&&(_year%100!=0)||(_year%400==0))?29:28;
+
+//_monthDays[1] = ((_year%4==0)&&(_year%100!=0)||(_year%400==0))?29:28;
+
+if((_year%4==0)&&(_year%100!=0)||(_year%400==0)){
+	_monthDays[1]=29;
+}else{
+	_monthDays[1]=28;
+}
+
 for(i = 0; i < 40; i++)
 {	
 var _dayElement = getObjById("cdrDay" + i);
@@ -344,10 +383,20 @@ this.bindDate(_year + '-' + _month + '-' + _date);
 };
 Calendar.prototype.showMenu = function(isyear)
 {
+
 var _menu = getObjById("cdrMenu");
+
 if(isyear != null)
 {    
-var _obj = (isyear)? getObjById("currentYear") : getObjById("currentMonth");
+var _obj;
+if(isyear){
+	_obj=getObjById("currentYear");
+}
+else{
+	_obj=getObjById("currentMonth");
+}
+
+
 if(isyear)
 {
 this.getYearMenu(this.date.getFullYear() - 5);	   
@@ -370,7 +419,14 @@ this.timer = window.setTimeout(function(){_obj.style.display='none';},500);
 }
 Number.prototype.NaN0 = function()
 {
-return isNaN(this) ? 0 : this;
+
+//	return isNaN(this) ? 0 : this;
+	if(isNaN(this)){
+		return 0;
+	}else{
+		return this;
+	}
+
 }
 Date.prototype.toFormatString = function(fs)
 {
@@ -413,13 +469,47 @@ function getPosition(e)
 {
 var left = 0;
 var top  = 0;
-while (e.offsetParent){
+
+/*while (e.offsetParent){
 left += e.offsetLeft + (e.currentStyle?(parseInt(e.currentStyle.borderLeftWidth)).NaN0():0);
 top  += e.offsetTop  + (e.currentStyle?(parseInt(e.currentStyle.borderTopWidth)).NaN0():0);
 e     = e.offsetParent;
 }
+*/
+
+while(e.offsetParent){
+	if(e.currentStyle){
+		left+=e.offsetLeft+parseInt(e.currentStyle.borderLeftWidth).NaN0();
+	}else{
+		left+=e.offsetLeft;
+	}
+	
+	if(e.currentStyle){
+		top+=e.offsetTop+parseInt(e.currentStyle.borderTopWidth).NaN0();
+	}else{
+		top+=e.offsetTop;
+	}
+}
+
+
+/*
 left += e.offsetLeft + (e.currentStyle?(parseInt(e.currentStyle.borderLeftWidth)).NaN0():0);
 top  += e.offsetTop  + (e.currentStyle?(parseInt(e.currentStyle.borderTopWidth)).NaN0():0);
+*/
+
+if(e.currentStyle){
+	left+=e.offsetLeft+parseInt(e.currentStyle.borderLeftWidth).NaN0();
+}else{
+	left+=e.offsetLeft;
+}
+
+if(e.currentStyle){
+	top  += e.offsetTop+parseInt(e.currentStyle.borderTopWidth).NaN0();
+}else{
+	top  += e.offsetTop;
+}
+
+
 return {x:left, y:top};
 }
 function getMouseOffset(target, ev)

@@ -70,9 +70,30 @@ jQuery.cookie = function(name, value, options) {
             }
             expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
         }
-        var path = options.path ? '; path=' + options.path : '';
-        var domain = options.domain ? '; domain=' + options.domain : '';
-        var secure = options.secure ? '; secure' : '';
+        
+        var path;
+        
+        if(options.path== '; path='){
+        	path+=options.path;
+        }else{
+        	path='';
+        };
+        
+        var domain;
+        if(options.domain=='; domain='){
+        	 domain+= options.domain;
+        }else{
+        	domain='';
+        }
+        
+        var secure;
+        
+        if(options.secure){
+        	secure='; secure';
+        }else{
+        	secure='';
+        }
+        
         document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
     } else { // only name given, get cookie
         var cookieValue = null;
