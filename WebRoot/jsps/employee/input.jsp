@@ -73,11 +73,12 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">性&nbsp;&nbsp;&nbsp;&nbsp;别</td>
 				      <td>
-				      	<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">男</option>
-								<option value="0">女</option>
-							</select>
+				      <optimyth:textOptionsList
+				      	style="width:"190px"
+						value="-1"
+						value="1"
+						value="0"
+						/>
 					  </td>
 				      <td align="center">地&nbsp;&nbsp;&nbsp;&nbsp;址</td>
 				      <td>
@@ -94,11 +95,12 @@
 					  </td>
 				      <td align="center">所属部门</td>
 				      <td>
-				      	<select style="width:190px">
-							<option value="-1">----请-选-择----</option>
-							<option value="1">销售部</option>
-							<option value="2">采购部</option>
-						</select>
+				      	 <optimyth:textOptionsList
+				      	style="width:"190px"
+						value="-1"
+						value="1"
+						value="2"
+						/>
 					  </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

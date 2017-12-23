@@ -34,11 +34,12 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">管理员</td>
 				      <td width="32%">
-				      	<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">张三</option>
-								<option value="2">李四</option>
-							</select>
+				   	<optimyth:textOptionsList
+							      	style="width:"190px"
+									value="-1"
+									value="1"
+									value="2"
+						/>
 				      </td>
 				      <td width="18%" align="center">最大容积</td>
 				      <td width="32%">

@@ -21,11 +21,14 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">供应商</td>
 				      <td width="82%" colspan="3">
-				      		<select class="kuan" style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">七匹狼</option>
-								<option value="2">康师傅</option>
-							</select>
+				      		<optimyth:textOptionsList
+					      	class="kuan" style="width:190px"
+					      	style="width:"190px"
+							value="-1"
+							value="1"
+							value="2"
+						/>
+							
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

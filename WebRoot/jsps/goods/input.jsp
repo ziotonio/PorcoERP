@@ -45,19 +45,21 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">供&nbsp;应&nbsp;商</td>
 				      <td width="32%">
-				      		<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">七匹狼</option>
-								<option value="2">康师傅</option>
-							</select>
+				      	<optimyth:textOptionsList
+					      	style="width:"190px"
+							value="-1"
+							value="1"
+							value="2"
+						/>
 				      </td>
 				      <td width="18%"align="center">商品类别</td>
 				      <td width="32%">
-				      		<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">西服</option>
-								<option value="2">夹克</option>
-							</select>
+				      	<optimyth:textOptionsList
+					      	style="width:"190px"
+							value="-1"
+							value="1"
+							value="2"
+						/>
 					  </td>
 				    </tr>
 				    <tr bgcolor="#FFFFFF">

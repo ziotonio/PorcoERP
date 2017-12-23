@@ -31,19 +31,21 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">资源类别</td>
 				      <td>
-				      		<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">URL访问</option>
-								<option value="2">action调用</option>
-							</select>
+				      			<optimyth:textOptionsList
+							      	style="width:"190px"
+									value="-1"
+									value="1"
+									value="2"
+						/>
 					  </td>
 				      <td align="center">操作类别</td>
 				      <td>
-				      		<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">可访问</option>
-								<option value="2">可视</option>
-							</select>
+				      			<optimyth:textOptionsList
+							      	style="width:"190px"
+									value="-1"
+									value="1"
+									value="2"
+								/>
 					  </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

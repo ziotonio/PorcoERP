@@ -39,10 +39,11 @@
 				      </td>
 				      <td width="18%" align="center">所属父菜单</td>
 				      <td width="32%">
-				      	<select style="width:190px">
-				      		<option>1111</option>
-				      		<option>1111</option>
-				      	</select>
+				      	<optimyth:textOptionsList
+					      	style="width:"190px"
+							1111
+							1111
+						/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
