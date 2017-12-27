@@ -60,7 +60,7 @@
 							value="1"
 							value="2"
 						/>
-					  </td>
+					  </td> 
 				    </tr>
 				    <tr bgcolor="#FFFFFF">
 					  <td colspan="4">&nbsp;</td>

@@ -38,7 +38,7 @@
 							      	style="width:"190px"
 									value="-1"
 									value="1"
-									value="2"
+									value="2" 
 						/>
 				      </td>
 				      <td width="18%" align="center">最大容积</td>

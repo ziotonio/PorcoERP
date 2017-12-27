@@ -26,7 +26,7 @@
 					      	style="width:"190px"
 							value="-1"
 							value="1"
-							value="2"
+							value="2" 
 						/>
 							
 				      </td>

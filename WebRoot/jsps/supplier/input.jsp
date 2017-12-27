@@ -63,7 +63,7 @@
 				      <td width="32%">
 				      	&nbsp;
 				      </td>
-				    </tr>
+				    </tr> 
 				    <tr  bgcolor="#FFFFFF">
 				      <td colspan="4">&nbsp;</td>
 				    </tr>

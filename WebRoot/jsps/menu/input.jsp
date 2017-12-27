@@ -53,7 +53,7 @@
 				      <td width="18%" height="30" align="center">URL</td>
 				      <td width="82%" colspan="3">
 				      	<input type="text" size="82"/>
-				      </td>
+				      </td> 
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
 				      <td colspan="4">&nbsp;</td>
