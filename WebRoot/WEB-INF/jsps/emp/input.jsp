@@ -78,7 +78,7 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">出生日期</td>
 				      <td>
-				      	<input type="text" value="${em.birthdayView}" size="25" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+				      	<input type="text" value= request.getParameter(em.birthdayView) size="25" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
 				      	<s:hidden name="em.birthday"/>
 					  </td>
 				      <td align="center">所属部门</td>
