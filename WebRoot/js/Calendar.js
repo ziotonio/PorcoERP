@@ -155,7 +155,7 @@
 	}   
 	var _date = null;
 	var _evObj = null;
-	var _initValue = null 
+	var _initValue = null; 
 	var i = 0; 
 	for(i = 0; i < arguments.length; i++)
 	{
@@ -168,7 +168,7 @@
 	}
 	_evObj = _evObj || _date;
 	var inputObj = _date;
-	var targetObj = _evObj
+	var targetObj = _evObj;
 	if(!_date){alert("传入参数错误!"); return;}
 	this.dateInput = _date;
 	_date = _date.value;
