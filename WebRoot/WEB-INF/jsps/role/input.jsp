@@ -1,37 +1,11 @@
+<%-- input.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <link href="css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="js/Calendar.js"></script>
-<script type="text/javascript">
-	$(function() {
-		/*
-		$("#all").click(function() {
-			$("[name=resources]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
-		});
-		$("#reverse").click(function() {
-			$("[name=resources]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
-            });
-
-		});
-		*/
-		
-		$("#all").click(function(){
-			//全选
-			//将所有的全部选中
-			$("[name='resUuids']").attr("checked",$(this).attr("checked")=="checked");
-		});
-		$("#reverse").click(function(){
-			//反选
-			//将所有选项的状态进行切换
-			$("[name='resUuids']").each(function(){
-				//将状态切换
-				$(this).attr("checked",$(this).attr("checked")!="checked");
-			});
-		});
-		
-	});
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="input.js">
 </script>
 <div class="content-right">
 	<div class="content-r-pic_w">
@@ -110,3 +84,4 @@
 	</div><!--"content-text"end-->
 	<div class="content-bbg"><img src="images/content_bbg.jpg" /></div>
 </div>
+<%-- end of input.jsp --%>

@@ -1,3 +1,4 @@
+<%-- login.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -7,15 +8,8 @@
 <link href="../css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
 <title>蓝源进销存(教学版)-系统登录页</title>
-<script>
-	$(function() {
-		$("#login_ok").click(function() {
-			$("form:first").submit();
-		});
-	});
-	function MM_swapImage(srcObj,image_src){
-		srcObj.src=image_src;
-	}
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="login.js">
 </script>
 </head>
 <body>
@@ -68,3 +62,4 @@
 	</div>
 </body>
 </html>
+<%-- end of login.jsp --%>

@@ -1,84 +1,77 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%-- task.jsp --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../js/Calendar.js"></script>
+<link href="../../../css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../../js/jquery-1.8.3.js"></script>
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="tasks.js">
+</script>
 <div class="content-right">
 	<div class="content-r-pic_w">
 		<div style="margin:8px auto auto 12px;margin-top:6px">
-			<span class="page_title">资源管理</span>
+			<span class="page_title">任务查询</span>
 		</div>
 	</div>
 	<div class="content-text">
-		<div class="square-order">
-			<form action="list.jsp" method="post">
-  			<div style="border:1px solid #cecece;">
-				<table width="100%"  border="0" cellpadding="0" cellspacing="0">
-				  <tr bgcolor="#FFFFFF">
-				    <td>&nbsp;</td>
-				  </tr>
-				</table>
-				<table width="100%"  border="0" cellpadding="0" cellspacing="0">
-				    <tr  bgcolor="#FFFFFF">
-				      <td width="18%" height="30" align="center">资源名称</td>
-				      <td width="82%" colspan="3">
-				      	<input type="text" size="77"/>
-				      </td>
-				    </tr>
-				    <tr bgcolor="#FFFFFF">
-					  <td colspan="4">&nbsp;</td>
-					</tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td height="30" align="center">资源类别</td>
-				      <td>
-				      			<optimyth:textOptionsList
-							      	style="width:"190px"
-									value="-1"
-									value="1" 
-									value="2"
-						/>
-					  </td>
-				      <td align="center">操作类别</td>
-				      <td>
-				      			<optimyth:textOptionsList
-							      	style="width:"190px"
-									value="-1"
-									value="1"
-									value="2"
-								/>
-					  </td>
-				    </tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td colspan="4">&nbsp;</td>
-				    </tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td width="18%" height="30" align="center">资源值</td>
-				      <td width="82%" colspan="3">
-				      	<input type="text" size="77"/>
-				      </td>
-				    </tr>
-				    <tr bgcolor="#FFFFFF">
-					  <td colspan="4">&nbsp;</td>
+		<form action="tasks.jsp" method="post"> 
+			<div class="square-o-top">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0"
+					style="font-size:14px; font-weight:bold; font-family:"黑体";">
+					<tr>
+						<td width="8%">供&nbsp;应&nbsp;商:</td>
+						<td width="29%">
+							<select style="width:137px">
+								<option value="-1">----请-选-择----</option>
+								<option value="1">七匹狼</option>
+								<option value="0">康师傅</option>
+							</select>
+						</td>
+						<td width="8%">发货方式:</td>
+						<td width="45%">
+							<select style="width:137px">
+								<option value="-1">----请-选-择----</option>
+								<option value="1">送货</option>
+								<option value="0">自提</option>
+							</select>
+						</td>
+						<td width=""><a id="query"> 
+							<img src="../../../images/can_b_01.gif" border="0" /> </a>
+						</td>
 					</tr>
 				</table>
 			</div>
-			<div class="order-botton">
-				<div style="margin:1px auto auto 1px;">
-					<table width="100%"  border="0" cellpadding="0" cellspacing="0">
-					  <tr>
-					    <td>
-					    	<a href="javascript:document.forms[0].submit()"><img src="../../images/order_tuo.gif" border="0" /></a>
-					    </td>
-					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="../../images/order_tuo.gif" border="0" /></a></td>
-					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="../../images/order_tuo.gif" border="0" /></a></td>
-					  </tr>
-					</table>
-				</div>
+			<!--"square-o-top"end-->
+			<div class="square-order">
+				<table width="100%" border="1" cellpadding="0" cellspacing="0">
+					<tr align="center"
+						style="background:url(../../../images/table_bg.gif) repeat-x;">
+						<td width="8%" height="30">订单类别</td>
+						<td width="11%">供应商</td>
+						<td width="7%">发货方式</td>
+						<td width="6%">联系人</td>
+						<td width="12%">联系方式</td>
+						<td width="40%">地址</td>
+						<td width="8%">地址</td>
+						<td width="6%">详情</td>
+					</tr>
+						<tr align="center" bgcolor="#FFFFFF">
+							<td height="30">采购</td>
+							<td>七匹狼</td>
+							<td>送货</td>
+							<td>狼外婆</td>
+							<td>119</td>
+							<td align="left">&nbsp;狼堡</td>
+							<td>正在采购</td>
+							<td>
+								<a href="./taskDetail.jsp">
+									<img src="../../../images/icon_3.gif" />详情
+								</a>
+							</td>
+						</tr>
+				</table>
 			</div>
-			</form>
-		</div><!--"square-order"end-->
-	</div><!--"content-text"end-->
-	<div class="content-bbg"><img src="../../images/content_bbg.jpg" /></div>
+		</form>
+	</div>
+	<div class="content-bbg"></div>
 </div>
+<%-- end of input.jsp --%>

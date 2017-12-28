@@ -1,6 +1,8 @@
+<%-- buyDetailList.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
+<%-- css link --%>
 <link href="css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 <div class="content-right">
@@ -76,3 +78,4 @@
 	</div>
 	<div class="content-bbg"></div>
 </div>
+<%-- end of buyDetailList.jsp --%>

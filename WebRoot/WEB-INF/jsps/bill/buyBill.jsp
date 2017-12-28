@@ -1,138 +1,11 @@
+<%-- buyBill.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <link href="css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="js/Calendar.js"></script>
-<script type="text/javascript">
-	/*
-	$(function() {
-		$("#query").click(function() {
-			$("[name='pageNum']").val(1);
-			$("form:first").submit();
-		});
-		$(".ajaxMsg").live("click",function(){
-			$(".ajaxMsg").empty();
-		});
-		$(".info").click(function(){
-			var jsonParam = {"bqm.goodsUuid":$(this).attr("value")};
-			jsonParam["bqm.time"]= $("[name='bqm.time']").val();
-			jsonParam["bqm.time2"]= $("[name='bqm.time2']").val();
-			jsonParam["bqm.type"]= $("[name='bqm.type']").val();
-			$tt = $(this).parent().parent();
-				//将制定标记tr删除
-				$('.ajaxMsg').empty();
-				
-				//每个tr对象都带有一个class="ajaxMsg",用于后期操作删除标记
-				
-				//动态添加一个tr行,用于做标题栏
-				//创建tr组件
-				
-				var $trHead = $("<tr align='center' class='ajaxMsg' style='background:url(images/table_bg.gif) repeat-x;'></tr>");
-				var $td1 = $("<td height='30'>订单号</td>");
-				$trHead.append($td1);
-				var $td2 = $("<td>订单时间</td>");
-				$trHead.append($td2);
-				var $td3 = $("<td>数量</td>");
-				$trHead.append($td3);
-				var $td4 = $("<td>单价</td>");
-				$trHead.append($td4);
-				var $td5 = $("<td>合计</td>");
-				$trHead.append($td5);
-				$tt.after($trHead);
-				$tt=$trHead;
-				
-				//--------------------------------------------------------------------------
-				var sum = 0;
-				for(i = 0;i<3;i++){
-					var $tr = $("<tr align='center' class='ajaxMsg'></tr>");
-					//共计5列
-					var $td1 = $("<td height='30'>1238987412</td>");
-					$tr.append($td1);
-					var $td2 = $("<td>2014-01-01</td>");
-					$tr.append($td2);
-					var $td3 = $("<td>"+i+"</td>");
-					$tr.append($td3);
-					var $td4 = $("<td align='right'>100.00&nbsp;元</td>");
-					$tr.append($td4);
-					var $td5 = $("<td align='right'>100.00&nbsp;元</td>");
-					$tr.append($td5);
-					
-					$tt.after($tr);
-					$tt=$tr;
-					sum = sum + 100;
-				}
-				//--------------------------------------------------------------------------
-				
-				
-				var $trFoot = $("<tr align='center' class='ajaxMsg'></tr>");
-				var $td1 = $("<td align='right' colspan='4' height='30'>总计：</td>");
-				$trFoot.append($td1);
-				var $td2 = $("<td align='right'>"+intToFloat(sum)+"&nbsp;元</td>");
-				$trFoot.append($td2);
-				$tt.after($trFoot);
-				$tt=$trHead;
-				
-		});
-	});
-	*/
-	$(function() {
-		$("#query").click(function() {
-			$("form:first").submit();
-		});
-		
-		$(".info").click(function(){
-			$nowTr = $(this).parent().parent();
-			
-			$(".ajaxMsg").remove();
-			
-			//将当前货物的uuid配置公共查询条件，发送ajax请求，获取对应货物的所有明细数据
-			var jsonParma = {};
-			jsonParma["bqm.goodsUuid"] = $(this).attr("val");
-			jsonParma["bqm.begin"] = $("[name='bqm.begin']").val();
-			jsonParma["bqm.end"] = $("[name='bqm.end']").val();
-			jsonParma["bqm.type"] = $("[name='bqm.type']").val();
-			jsonParma["bqm.supplierUuid"] = $("[name='bqm.supplierUuid']").val();
-			$.post("bill_ajaxBillDetailByGoods.action",jsonParma,function(data){
-				//后台发送了明细数据
-				var odmList = data.odmList;
-				
-				//使用上述值拼写tr
-					//添加表头
-				$headTr = $('<tr align="center" style="background:url(images/table_bg.gif) repeat-x;" class="ajaxMsg"><td height="30">订单号</td><td>订单时间</td><td>数量</td><td>单价</td><td>合计</td></tr>') 
-				$nowTr.after($headTr);
-				$nowTr = $headTr;
-				var sum = 0;
-				for(var i = 0;i<odmList.length;i++){
-					var odm = odmList[i];
-					
-					var orderNum = odm.om.orderNum;
-					var createTimeView = odm.om.createTimeView;
-					var num = odm.num;
-					var priceView = odm.priceView;
-				
-					sum+=num*priceView;
-					
-					//添加数据（循环）
-					$dataTr = $('<tr align="center" class="ajaxMsg"><td height="30">'+orderNum+'</td><td>'+createTimeView+'</td><td>'+num+'</td><td align="right">'+priceView+'&nbsp;元</td><td align="right">'+intToFloat(num*priceView)+'&nbsp;元</td></tr>');
-					$nowTr.after($dataTr);
-					$nowTr = $dataTr;
-				}
-				//添加表尾
-				$tailTr = $('<tr align="center" class="ajaxMsg"><td height="30" align="right" colspan="4">总计：</td><td align="right">'+intToFloat(sum)+' 元</td></tr>'); 
-				$nowTr.after($tailTr);
-				
-			});
-			
-			$(".ajaxMsg").live("click",function(){
-				$(".ajaxMsg").remove();
-			});
-		});
-		
-		
-	});
-	function intToFloat(val){
-		return new Number(val).toFixed(2);
-	}
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="buyBill.js">
 </script>
 <div class="content-right">
 	<div class="content-r-pic_w">
@@ -212,3 +85,4 @@
 	</div>
 	<div class="content-bbg"></div>
 </div>
+<%-- end of buyBill.jsp --%>

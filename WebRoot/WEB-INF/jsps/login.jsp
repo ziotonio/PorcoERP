@@ -1,3 +1,4 @@
+<%-- login.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -7,38 +8,8 @@
 <link href="css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 <title>蓝源进销存(教学版)-系统登录页</title>
-<script>
-	/*
-	$(function() {
-		$("#login_ok").click(function() {
-			$("form:first").submit();
-		});
-	});
-	*/
-	function MM_swapImage(srcObj,image_src){
-		srcObj.src=image_src;
-	}
-	
-	$(function(){
-		//为login_ok绑定点击事件
-		$("#login_ok").click(function(){
-			//提交form
-			$("form:first").submit();
-		});
-		/*
-		$("[name='em.userName']").blur(function(){
-			//获取当前的输入值，如果长度不在6到12位之间，显示错误
-			var userName = $(this).val();
-			if(userName.length <6 || userName.length > 12){
-				//在指定位置显示错误信息
-				$info = $("<span class='info_style'>用户名必须是6到12位</span>");
-				$(this).after($info);
-			}else{
-				$(this).next().remove();
-			}
-		});
-		*/
-	});
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="login.js">
 </script>
 </head>
 <body>
@@ -91,3 +62,4 @@
 	</div>
 </body>
 </html>
+<%-- end of login.jsp --%>

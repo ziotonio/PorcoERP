@@ -1,49 +1,10 @@
+<%-- paging.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<script type="text/javascript">
-	$(function(){
-		var pageNum = ${pageNum};
-		var pageCount = ${pageCount};
-		if(pageCount == 1){
-			$("#fir").css("display","none");
-			$("#pre").css("display","none");
-			$("#next").css("display","none");
-			$("#last").css("display","none");
-		}else if(pageNum == 1){
-			$("#fir").css("display","none");
-			$("#pre").css("display","none");
-			$("#next").css("display","inline");
-			$("#last").css("display","inline");
-		}else if(pageNum == pageCount){
-			$("#fir").css("display","inline");
-			$("#pre").css("display","inline");
-			$("#next").css("display","none");
-			$("#last").css("display","none");
-		}else{
-			$("#fir").css("display","inline");
-			$("#pre").css("display","inline");
-			$("#next").css("display","inline");
-			$("#last").css("display","inline");
-		}
-		$("#fir").click(function(){
-			$("[name='pageNum']").val(1);
-			$("form:first").submit();
-		});
-		$("#pre").click(function(){
-			$("[name='pageNum']").val($("[name='pageNum']").val()-1);
-			$("form:first").submit();
-		});
-		$("#next").click(function(){
-			$("[name='pageNum']").val($("[name='pageNum']").val()*1+1);
-			$("form:first").submit();
-		});
-		$("#last").click(function(){
-			$("[name='pageNum']").val(pageCount);
-			$("form:first").submit();
-		});
-
-	});
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="paging.js">
 </script>
 <br/>
 <s:hidden name="pageNum"/>
@@ -66,3 +27,4 @@
 		<td width="12%">当前第<span style="color:red;">${pageNum}</span>/${pageCount}页</td>
 	</tr>
 </table>
+<%-- end of paging.jsp --%>

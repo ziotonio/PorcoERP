@@ -1,7 +1,12 @@
+<%-- buyCheck.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <link href="css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/Calendar.js"></script>
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="buyCheck.js">
+</script>
 <div class="content-right">
 	<div class="content-r-pic_w">
 		<div style="margin:8px auto auto 12px;margin-top:6px">
@@ -9,76 +14,72 @@
 		</div>
 	</div>
 	<div class="content-text">
+		<form action="order_buyCheck" method="post"> 
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
 					<tr>
-						<td height="30">企业名称:</td>
-						<td class="order_show_msg">${om.sm.name}</td>
-						<td>下单时间:</td>
-						<td class="order_show_msg">${om.createTimeView}</td>
-						<td>下 单 人:</td>
-						<td class="order_show_msg">${om.creater.name}</td>
-						<td>订 单 号:</td>
-						<td class="order_show_msg" colspan="2">${om.orderNum}</td>
+						<td  height="30">下单时间:</td>
+						<td>
+							<input type="text" size="14" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+						</td>
+						<td>到</td>
+						<td>
+							&nbsp;&nbsp;<input type="text" size="14" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+						</td>
+						<td>总量:</td>
+						<td><input type="text" size="14" /></td>
+						<td>到 </td>
+						<td>&nbsp;&nbsp;<input type="text" size="14" /></td>
 					</tr>
 					<tr>
-						<td height="30">订单类别:</td>
-						<td class="order_show_msg">${om.orderTypeView}</td>
-						<td>订单状态:</td>
-						<td class="order_show_msg">${om.typeView }</td>
-						<td>商品总量:</td>
-						<td class="order_show_msg">${om.totalNum}</td>
-						<td>订单总额:</td>
-						<td class="order_show_msg">${om.totalPriceView} 元</td>
+						<td>总额:</td>
+						<td><input type="text" size="14" /></td>
+						<td>到</td>
+						<td>&nbsp;&nbsp;<input type="text" size="14" /></td>
+						<td>下单人:</td>
+						<td><input type="text" size="14" /></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;&nbsp;<a id="query"> 
+							<img src="images/can_b_01.gif" border="0" /> </a>
+						</td>
 					</tr>
 				</table>
 			</div>
 			<!--"square-o-top"end-->
 			<div class="square-order">
-				<center style="text-decoration:underline;font-size:16px; font-weight:bold; font-family:"黑体";">&nbsp;&nbsp;&nbsp;&nbsp;订&nbsp;&nbsp;单&nbsp;&nbsp;明&nbsp;&nbsp;细&nbsp;&nbsp;&nbsp;&nbsp;</center>
-				<br/>
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
 						style="background:url(images/table_bg.gif) repeat-x;">
-						<td width="20%" height="30">商品类别</td>
-						<td width="20%">商品名称</td>
-						<td width="20%">购买数量</td>
-						<td width="20%">进货单价</td>
-						<td width="20%">合计</td>
+						<td width="26%" height="30">订单号</td>
+						<td width="17%">供应商</td>
+						<td width="9%">制单人</td>
+						<td width="20%">制单时间</td>
+						<td width="10%">订单商品总量</td>
+						<td width="12%">订单总金额</td>
+						<td width="6%">审核</td>
 					</tr>
-				<s:iterator value="om.odms">
+				<s:iterator value="orderList">
 					<tr align="center" bgcolor="#FFFFFF">
-						<td height="30">${gm.gtm.name}</td>
-						<td>${gm.name}</td>
-						<td>${num}</td>
-						<td align="right">${priceView} 元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td align="right">${num*price} 元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					</tr>
-				</s:iterator>
-					<tr align="right">
-						<td height="30" width="80%" colspan="4">总计&nbsp;&nbsp;</td>
-						<td width="20%">${om.totalPriceView}  元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					</tr>
-				</table>
-				<br/>
-				<table width="100%">
-					<tr align="center">
-						<td width="50%">
-							<s:a action="order_buyCheckPass" cssStyle="color:#0f0;font-size:20px;padding-top:2px;font-weight:bold;text-decoration:none;width:82px;height:28px;display:block;background:url(images/btn_bg.jpg)">
-								<s:param name="om.uuid" value="om.uuid"/>
-								通&nbsp;&nbsp;过
-							</s:a>
-						</td>
-						<td width="50%">
-							<s:a action="order_buyCheckNoPass" cssStyle="color:#f00;font-size:20px;padding-top:2px;font-weight:bold;text-decoration:none;width:82px;height:28px;display:block;background:url(images/btn_bg.jpg)">
-								<s:param name="om.uuid" value="om.uuid"/>
-								驳&nbsp;&nbsp;回
+						<td width="13%" height="30">${orderNum}</td>
+						<td>${sm.name}</td>
+						<td>${creater.name }</td>
+						<td>${createTimeView }</td>
+						<td>${totalNum}</td>
+						<td align="right">${totalPriceView} 元</td>
+						<td>
+							<s:a action="order_toBuyCheckDetail" cssClass="xiu">
+								<s:param name="om.uuid" value="uuid"/>
+								审核
 							</s:a>
 						</td>
 					</tr>
+				</s:iterator>	
 				</table>
+				<%@ include file="/tools/pages.jsp" %>
 			</div>
+		</form>
 	</div>
 	<div class="content-bbg"></div>
 </div>
+<%-- end of buyBill.jsp --%>

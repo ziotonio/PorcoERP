@@ -1,20 +1,11 @@
+<%-- input.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <link href="../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="../../js/Calendar.js"></script>
-<script type="text/javascript">
-	$(function() {
-		$("#all").click(function() {
-			$("[name=roles]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
-		});
-		$("#reverse").click(function() {
-			$("[name=roles]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
-            });
-
-		});
-	});
+<%-- Here starts the javascript call function --%>
+<script type="text/javascript" src="input.js">
 </script>
 <div class="content-right">
 	<div class="content-r-pic_w">
@@ -73,12 +64,11 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">性&nbsp;&nbsp;&nbsp;&nbsp;别</td>
 				      <td>
-				      <optimyth:textOptionsList
-				      	style="width:"190px"
-						value="-1"
-						value="1"
-						value="0"
-						/>
+				      	<select style="width:190px">
+								<option value="-1">----请-选-择----</option>
+								<option value="1">男</option>
+								<option value="0">女</option>
+							</select>
 					  </td>
 				      <td align="center">地&nbsp;&nbsp;&nbsp;&nbsp;址</td>
 				      <td>
@@ -95,12 +85,11 @@
 					  </td>
 				      <td align="center">所属部门</td>
 				      <td>
-				      	 <optimyth:textOptionsList
-				      	style="width:"190px"
-						value="-1"
-						value="1"
-						value="2" 
-						/>
+				      	<select style="width:190px">
+							<option value="-1">----请-选-择----</option>
+							<option value="1">销售部</option>
+							<option value="2">采购部</option>
+						</select>
 					  </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
@@ -152,3 +141,4 @@
 	</div><!--"content-text"end-->
 	<div class="content-bbg"><img src="../../images/content_bbg.jpg" /></div>
 </div>
+<%-- end of input.jsp --%>

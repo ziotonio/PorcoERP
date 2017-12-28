@@ -1,7 +1,9 @@
+<%-- input.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <link href="css/index.css" rel="stylesheet" type="text/css" />
+<%-- jquery lib --%>
 <script type="text/javascript" src="js/Calendar.js"></script>
 <div class="content-right">
 	<div class="content-r-pic_w">
@@ -73,3 +75,4 @@
 	</div><!--"content-text"end-->
 	<div class="content-bbg"><img src="images/content_bbg.jpg" /></div>
 </div>
+<%-- end of input.jsp --%>
