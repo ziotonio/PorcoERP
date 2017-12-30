@@ -29,7 +29,7 @@ public class ExcelUtil {
 		try {
 			return Workbook.createWorkbook(os);
 		} catch (IOException e) {
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 			return null;
 		} 
 	}
@@ -65,7 +65,7 @@ public class ExcelUtil {
 		try {
 			s.addCell(l);
 		} catch (Exception e) {
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 		} 
 	}
 	
@@ -89,7 +89,7 @@ public class ExcelUtil {
 		try {
 			s.setRowView(idx-1, height*20);
 		} catch (Exception e) {
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class ExcelUtil {
 		try {
 			s.mergeCells(b-1, a-1, d-1, c-1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 		}
 	}
 	
@@ -200,7 +200,7 @@ public class ExcelUtil {
 			
 			l.setCellFormat(wcf);
 		} catch (Exception e) {
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class MD5Utils {
 
 	        return hexString.toString();
 	    } catch(Exception ex){
-	       throw new RuntimeException(ex);
+	    	 System.out.println("Something was wrong");
 	    }
 	}
 

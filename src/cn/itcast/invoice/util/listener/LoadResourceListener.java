@@ -39,8 +39,7 @@ public class LoadResourceListener implements ServletContextListener{
 		try {
 			ArrayList<String> Info = getDBInfo();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			 System.out.println("Something was wrong");
 		}
 		
 		
@@ -59,12 +58,12 @@ public class LoadResourceListener implements ServletContextListener{
 			//å°†é›†å�ˆæ”¾å…¥ServletContextèŒƒå›´
 			event.getServletContext().setAttribute("resAllUrl", temp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 		}finally{
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				 System.out.println("Something was wrong");
 			}
 		}
 		

@@ -12,15 +12,15 @@ public class ExceptionInterceptor extends AbstractInterceptor{
 		try {
 			return invocation.invoke();
 		} catch (AppException e) {
-			//使用下列对象获取actionsupport常用操作
+			//ä½¿ç”¨ä¸‹åˆ—å¯¹è±¡èŽ·å�–actionsupportå¸¸ç”¨æ“�ä½œ
 			ActionSupport as = (ActionSupport) invocation.getAction();
 			as.addActionError(as.getText(e.getMessage()));
-			//给开发人员发一份email
-			//记录日志e.printStackTrace();
-			//获取Action的调用环境
+			//ç»™å¼€å�‘äººå‘˜å�‘ä¸€ä»½email
+			//è®°å½•æ—¥å¿—e.printStackTrace();
+			//èŽ·å�–Actionçš„è°ƒç”¨çŽ¯å¢ƒ
 			return "error";
 		} catch(Exception e){
-			e.printStackTrace();
+			 System.out.println("Something was wrong");
 			return "error";
 		}
 	}
