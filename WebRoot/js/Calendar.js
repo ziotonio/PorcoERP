@@ -192,6 +192,41 @@
 	var obj = getObjById("Calendar");
 	obj.style.display = "none";   
 	};
+	function CheckHoliday (){
+		_dayElement.innerHTML = _day;
+		if(_day == _date.getDate())
+		{
+		this.onMouseOver(_dayElement);
+		_dayElement.onmouseover = Function("");   
+		_dayElement.onmouseout = Function(""); 					  			    
+		}
+		if(this.isHoliday(_year,_month,_day))
+		{
+		_dayElement.style.color = this.style.bodyHolidayFontColor;			  
+		}
+		_curDate = new Date(_year, _month, _day);
+		_dayElement.title =  _curDate.toFormatString("yyyy年mm月dd日");
+		_dayElement.value = _curDate.toFormatString("-");
+		_day++;
+	}
+	function PreviDay(){
+
+		_previDate = new Date(_year,_month - 1,_previDay);
+		_dayElement.innerHTML = _previDay;
+		_dayElement.title = _previDate.toFormatString("yyyy年mm月dd日");
+		_dayElement.value = _previDate.toFormatString("-");	
+		_dayElement.style.color = this.style.moreDayColor;	
+		_previDay++;
+	}
+	function NextDay(){
+
+		_nextDate = new Date(_year,_month + 1,_nextDay);
+		_dayElement.innerHTML = _nextDay;
+		_dayElement.title = _nextDate.toFormatString("yyyy年mm月dd日");
+		_dayElement.value = _nextDate.toFormatString("-");
+		_dayElement.style.color = this.style.moreDayColor;	
+		_nextDay++;		
+	}
 	Calendar.prototype.bindDate = function(date)
 	{
 	var _monthDays = new Array(31,30,31,30,31,30,31,31,30,31,30,31);	
@@ -254,12 +289,7 @@
 	//获取上一个月的日期
 	if(this.showMoreDay)
 	{
-	_previDate = new Date(_year,_month - 1,_previDay);
-	_dayElement.innerHTML = _previDay;
-	_dayElement.title = _previDate.toFormatString("yyyy年mm月dd日");
-	_dayElement.value = _previDate.toFormatString("-");	
-	_dayElement.style.color = this.style.moreDayColor;	
-	_previDay++;
+		PreviDay();
 	}else
 	{
 	_dayElement.innerHTML = "";
@@ -271,12 +301,7 @@
 	//获取下个月的日期
 	if(this.showMoreDay)
 	{
-	_nextDate = new Date(_year,_month + 1,_nextDay);
-	_dayElement.innerHTML = _nextDay;
-	_dayElement.title = _nextDate.toFormatString("yyyy年mm月dd日");
-	_dayElement.value = _nextDate.toFormatString("-");
-	_dayElement.style.color = this.style.moreDayColor;	
-	_nextDay++;			   
+		NextDay();
 	}else
 	{
 	_dayElement.innerHTML = "";
@@ -286,21 +311,7 @@
 	else if(i >= temp)
 	{
 	//获取本月日期
-	_dayElement.innerHTML = _day;
-	if(_day == _date.getDate())
-	{
-	this.onMouseOver(_dayElement);
-	_dayElement.onmouseover = Function("");   
-	_dayElement.onmouseout = Function(""); 					  			    
-	}
-	if(this.isHoliday(_year,_month,_day))
-	{
-	_dayElement.style.color = this.style.bodyHolidayFontColor;			  
-	}
-	_curDate = new Date(_year, _month, _day);
-	_dayElement.title =  _curDate.toFormatString("yyyy年mm月dd日");
-	_dayElement.value = _curDate.toFormatString("-");
-	_day++;
+		CheckHoliday();
 	}
 	else
 	{
@@ -421,7 +432,7 @@
 	var _obj = getObjById("cdrMenu");
 	this.timer = window.setTimeout(function(){_obj.style.display='none';},500);	
 	}
-	Number.prototype.NaN0 = function()
+	Nan0Mod = function()
 	{
 	
 	//	return isNaN(this) ? 0 : this;
@@ -432,7 +443,7 @@
 		}
 	
 	}
-	Date.prototype.toFormatString = function(fs)
+	ToFormatStringMod = function(fs)
 	{
 	if(fs.length == 1)
 	{ 
