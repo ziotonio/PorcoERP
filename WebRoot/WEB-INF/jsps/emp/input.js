@@ -3,13 +3,9 @@
  * @returns
  */
 $(function() {
+	document.writeln("<script type='text/javascript' src='empFanOut.js'></script>");
+
 		$("#all").click(function() {
 			$("[name=roles]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
-		});
-		$("#reverse").click(function() {
-			$("[name=roles]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
-            });
-
 		});
 });
