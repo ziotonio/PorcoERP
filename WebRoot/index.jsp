@@ -1,3 +1,5 @@
-<script type="text/javascript">
-	top.document.location="pages_login.action";
+<%-- index.jsp --%>
+<script type="text/javascript" src="index.js">
+	
 </script>
+<%-- index.jsp --%>
