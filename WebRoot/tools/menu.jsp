@@ -1,3 +1,4 @@
+<%-- menu.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <html>
@@ -14,10 +15,7 @@
 	<body>
 		<ul id="black" class="filetree"></ul>
 	</body>
-	<script type="text/javascript">
-		$("#black").treeview({
-			url : "menu_showMenu.action"
-		})
+	<script type="text/javascript" src="menu.js">
 	</script>
 </html>
-
+<%-- menu.jsp --%>
